@@ -1,0 +1,37 @@
+{
+    "dependencies": {
+        "github.com/go-yaml/yaml": {
+            "branch": "v2"
+        },
+        "github.com/golang/protobuf": {
+            "branch": "master"
+        },
+        "github.com/grpc-ecosystem/grpc-opentracing": {
+            "branch": "master"
+        },
+        "github.com/lightstep/lightstep-tracer-go": {
+            "branch": "master"
+        },
+        "github.com/nu7hatch/gouuid": {
+            "branch": "master"
+        },
+        "github.com/opentracing-contrib/go-stdlib": {
+            "branch": "master"
+        },
+        "github.com/opentracing/basictracer-go": {
+            "branch": "master"
+        },
+        "github.com/opentracing/opentracing-go": {
+            "branch": "master"
+        },
+        "github.com/openzipkin/zipkin-go-opentracing": {
+            "branch": "master"
+        },
+        "golang.org/x/net": {
+            "branch": "master"
+        },
+        "google.golang.org/grpc": {
+            "branch": "master"
+        }
+    }
+}

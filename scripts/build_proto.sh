@@ -1,0 +1,1 @@
+protoc --go_out=plugins=grpc:dronutz proto/*.proto --proto_path=proto``

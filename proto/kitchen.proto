@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package dronutz;
+
+service Kitchen {
+  rpc Add(Donuts) returns (Empty) {}
+  rpc Check(Empty) returns (Donuts) {}
+  rpc Remove(Donuts) returns (Empty) {}
+}
+
+message Empty {}
+
+message Donuts {
+  repeated Donut donuts = 1;
+}
+
+message Donut {
+  string donut_id = 1;
+  string order_id = 2;
+  string flavor = 3;
+  string status = 4;
+}
