@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/grpc-ecosystem/grpc-opentracing/go/otgrpc"
+	"github.com/opentracing-contrib/go-stdlib/nethttp"
+	opentracing "github.com/opentracing/opentracing-go"
 	"github.com/tedsuo/ot-walkthrough-go/dronutz"
 
 	"google.golang.org/grpc"
@@ -24,9 +27,17 @@ func main() {
 		panic(err)
 	}
 
+	err = dronutz.ConfigureGlobalTracer(cfg, "api")
+	if err != nil {
+		panic(err)
+	}
+
 	conn, err := grpc.Dial(
 		cfg.KitchenAddress(),
 		grpc.WithInsecure(),
+		grpc.WithUnaryInterceptor(
+			otgrpc.OpenTracingClientInterceptor(opentracing.GlobalTracer()),
+		),
 	)
 	if err != nil {
 		panic(err)
@@ -39,7 +50,13 @@ func main() {
 
 	err = http.ListenAndServe(
 		cfg.APIAddress(),
-		service.ServeMux(),
+		nethttp.Middleware(
+			opentracing.GlobalTracer(),
+			service.ServeMux(),
+			nethttp.OperationNameFunc(func(req *http.Request) string {
+				return "/dronutz.API" + req.URL.Path
+			}),
+		),
 	)
 
 	fmt.Println("Api server exited:", err)

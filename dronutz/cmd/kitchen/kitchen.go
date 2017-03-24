@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/grpc-ecosystem/grpc-opentracing/go/otgrpc"
+	opentracing "github.com/opentracing/opentracing-go"
 	"github.com/tedsuo/ot-walkthrough-go/dronutz"
 
 	"google.golang.org/grpc"
@@ -24,7 +26,18 @@ func main() {
 		panic(err)
 	}
 
-	server := grpc.NewServer()
+	err = dronutz.ConfigureGlobalTracer(cfg, "kitchen")
+	if err != nil {
+		panic(err)
+	}
+
+	server := grpc.NewServer(
+		grpc.UnaryInterceptor(
+			otgrpc.OpenTracingServerInterceptor(
+				opentracing.GlobalTracer(),
+				otgrpc.LogPayloads()),
+		),
+	)
 
 	service := dronutz.NewKitchenService(cfg)
 	dronutz.RegisterKitchenServer(server, service)
