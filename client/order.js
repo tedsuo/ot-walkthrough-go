@@ -29,11 +29,19 @@ Order.prototype.items = function(){
   return items;
 }
 
+Order.prototype.headers = function(){
+  var otHeaders = {};
+  Tracer.inject(this._span, Tracer.FORMAT_TEXT_MAP, otHeaders);
+  return otHeaders;
+}
+
 Order.prototype.activate = function(){
+  this._span = Tracer.startSpan('/dronutz.Client/BuyDonuts');
   this._state = "active";
 }
 
 Order.prototype.complete = function(){
+  this._span.finish();
   return this.reset();
 }
 

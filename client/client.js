@@ -1,4 +1,13 @@
 $(function() {
+    Tracer.initGlobalTracer(LightStep.tracer({
+      component_name      : 'client',
+      access_token        : Config.tracer_access_token,
+      collector_host      : Config.tracer_host,
+      collector_port      : Config.tracer_port,
+      collector_encryption: "none",
+      xhr_instrumentation : false,
+    }));
+
     var order = new Order();
 
     $(".donut-btn").click(function(e){
@@ -19,6 +28,7 @@ function orderDonuts(order){
     data: JSON.stringify({
       donuts: order.items(),
     }),
+    headers: order.headers(),
     method: 'POST',
     success: function(order_status) {
       console.log(order_status)
@@ -39,6 +49,7 @@ function pollStatus(order){
       data: JSON.stringify({
         order_id: order.orderID(),
       }),
+      headers: order.headers(),
       method: 'POST',
       success: function(order_status) {
         console.log(order_status);
