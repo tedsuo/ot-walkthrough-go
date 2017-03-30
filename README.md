@@ -25,8 +25,8 @@ Dronutz has two server components, `API` and `Kitchen`, which can be run in two
 separate terminal windows. Both are configured with the same config file.
 
 ```
-./scripts/run_kitchen.sh -config config_example.yaml
-./scripts/run_api.sh -config config_example.yaml
+./scripts/run_kitchen.sh -config config_example.yml
+./scripts/run_api.sh -config config_example.yml
 ```
 
 In your web broswer, navigate to http://127.0.0.1:10001 and get yourself 
@@ -94,7 +94,7 @@ if err != nil {
 There's a trick in this first block of code. Make sure to change the second 
 parameter to `kitchen` when you add it to the Kitchen component.
 
-### Intsrument the HTTP Server
+### Instrument the HTTP Server
 The first thing to always intrument is the inbound RPC server. For API, 
 this is an http server. Use the `nethttp` package from `opentracing-contrib` 
 to wrap the top-level service `http.Handler` with opentracing middleware.
