@@ -25,8 +25,8 @@ Dronutz has two server components, `API` and `Kitchen`, which can be run in two
 separate terminal windows. Both are configured with the same config file.
 
 ```
-./scripts/run_kitchen.sh -config config_example.yaml
-./scripts/run_api.sh -config config_example.yaml
+./scripts/run_kitchen.sh -config config_example.yml
+./scripts/run_api.sh -config config_example.yml
 ```
 
 In your web broswer, navigate to http://127.0.0.1:10001 and get yourself 
